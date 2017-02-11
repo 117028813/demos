@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>websites</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    a:hover, a:focus {
+      color: #23527c;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div id="websites">
+  <h3>CDN</h3>
+  <my-websites v-bind:some-websites="cdn"></my-websites>
+
+  <h3>IT technology</h3>
+  <my-websites v-bind:some-websites="itTechnology"></my-websites>
+
+  <h3>blog</h3>
+  <my-websites v-bind:some-websites="blog"></my-websites>
+
+  <h3>other</h3>
+  <my-websites v-bind:some-websites="other"></my-websites>
+
+  <template id="websiteTemplate">
+    <ul>
+      <li v-for="item in someWebsites">
+        <span>{{item.name}}</span>
+        <a v-bind:href="item.url">{{item.url}}</a>
+      </li>
+    </ul>
+  </template>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.1.10/vue.js"></script>
+<script>
+Vue.component('my-websites', {
+  template: '#websiteTemplate',
+  props: ['someWebsites']
+})
+
+var vm = new Vue({
+  el: '#websites',
+  data: {
+    cdn: [
+      {name: 'BootCDN', url: 'http://www.bootcdn.cn/'},
+      {name: '七牛云存储', url: 'http://www.staticfile.org/'},
+      {name: 'cdnjs', url: 'https://cdnjs.com/'}
+    ],
+    itTechnology: [
+      {name: '菜鸟教程', url: 'http://www.runoob.com/'},
+      {name: 'w3school', url: 'http://www.w3school.com.cn/'},
+      {name: 'MDN Mozilla Developer Network', url: 'https://developer.mozilla.org/zh-CN/'},
+      {name: 'bootstrap中文网', url: 'http://www.bootcss.com/'},
+      {name: 'REGEXPER', url: 'https://regexper.com/'},
+      {name: 'FLEXBOX FROGGY', url: 'http://flexboxfroggy.com/#zh-cn'},
+      {name: 'ES6 primer', url: 'http://es6.ruanyifeng.com/'},
+      {name: 'git command', url: 'http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html'},
+      {name: '慕课网', url: 'http://www.imooc.com/'}
+    ],
+    blog: [
+      {name: '刘家轶', url: 'https://117028813.github.io/'},
+      {name: '张鑫旭', url: 'http://www.zhangxinxu.com/'},
+      {name: '阮一峰', url: 'http://www.ruanyifeng.com/blog/'},
+      {name: '廖雪峰', url: 'http://www.liaoxuefeng.com/'},
+    ],
+    other: [
+      {name: '中国高等教育学生信息网', url: 'http://www.chsi.com.cn/'},
+      {name: '沈阳市人力资源和社会保障局', url: 'http://www.syhrss.gov.cn/'}
+    ]
+  }
+})
+</script>
+</body>
+</html>
