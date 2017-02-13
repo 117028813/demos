@@ -39,6 +39,9 @@
   <h3>blog</h3>
   <my-websites v-bind:some-websites="blog"></my-websites>
 
+  <h3>租房</h3>
+  <my-websites v-bind:some-websites="renting"></my-websites>
+
   <h3>other</h3>
   <my-websites v-bind:some-websites="other"></my-websites>
 
@@ -83,6 +86,12 @@ var vm = new Vue({
       {name: '张鑫旭', url: 'http://www.zhangxinxu.com/'},
       {name: '阮一峰', url: 'http://www.ruanyifeng.com/blog/'},
       {name: '廖雪峰', url: 'http://www.liaoxuefeng.com/'},
+    ],
+    renting: [
+      {name: 'ZUBER', url: 'http://www.zuber.im/'},
+      {name: 'ZIROOM', url: 'http://www.ziroom.com/'},
+      {name: '蛋壳公寓', url: 'http://www.dankegongyu.com/'},
+      {name: '北京租房豆瓣小组', url: 'https://www.douban.com/group/beijingzufang/'}
     ],
     other: [
       {name: '中国高等教育学生信息网', url: 'http://www.chsi.com.cn/'},
