@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue test</title>
+  <style>
+  
+  </style>
+</head>
+<body>
+<div id="app">
+  <h1>Hello App!</h1>
+  <p>
+    <!--router-link默认会被渲染成a标签-->
+    <router-link to="/foo">Go to Foo</router-link>
+    <router-link to="/bar">Go to Bar</router-link>
+  </p>
+  <!--路由匹配到的组件会渲染在这里-->
+  <router-view></router-view>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.1.10/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/2.2.0/vue-router.js"></script>
+
+<script>
+
+// 创建路由实例
+// 定义每个路由的路径和组件
+const router = new VueRouter({
+  routes: [
+  {
+    path: '/foo',
+    component: {
+      template: '<div>foo</div>'
+    }
+  },
+  {
+    path: '/bar',
+    component: {
+      template: '<div>bar</div>'
+    }
+  }
+]
+})
+
+const app = new Vue({
+  el: '#app',
+  router
+})
+</script>
+</body>
+</html>
