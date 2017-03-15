@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css 等高列布局</title>
+  <style>
+    .container {
+      width: 100%;
+    }
+    .container::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+    .aside, .section {
+      width: 33%;
+      float: left;
+    }
+    .left-sidebar {
+      background: red;
+      height: 200px;
+    }
+    .section {
+      background: green;
+      height: 100px;
+    }
+    .right-sidebar {
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="left" class="aside left-sidebar"></div>
+  <div id="content" class="section"></div>
+  <div id="right" class="aside right-sidebar"></div>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script>
+  $(function () {
+    function setEqualHeight(columns) {
+      let tallestColumn = 0;
+      let currentHeight = undefined;
+      // 遍历所有列，找出最高列的值
+      columns.each(function () {
+        currentHeight = $(this).height();
+        if (currentHeight > tallestColumn) {
+          tallestColumn = currentHeight;
+        }
+      });
+      // 将所有列的高度设为最高列的值
+      columns.height(tallestColumn);
+    }
+    setEqualHeight($('.container > div'));
+  });
+</script>
+</body>
+</html>
