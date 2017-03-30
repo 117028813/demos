@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>tangram</title>
+  <style>
+    #canvas {
+      display: block;
+      margin: 100px auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="800"></canvas>
+
+<script>
+
+let canvas = document.querySelector('#canvas');
+let context = canvas.getContext('2d');
+
+let tangram = [
+  {
+    p: [{x: 0, y: 0}, {x: 800, y: 0}, {x: 400, y: 400}, {x: 0, y: 0}],
+    color: '#0ff'
+  },
+  {
+    p: [{x: 0, y: 0}, {x: 400, y: 400}, {x: 0, y: 800}, {x: 0, y: 0}],
+    color: '#ffe4c4'
+  },
+  {
+    p: [{x: 0, y: 800}, {x: 200, y: 600}, {x: 400, y: 800}, {x: 0, y: 800}],
+    color: '#8a2be2'
+  },
+  {
+    p: [{x: 200, y: 600}, {x: 400, y: 400}, {x: 600, y: 600}, {x: 400, y: 800}, {x: 200, y: 600}],
+    color: '#7fff00'
+  },
+  {
+    p: [{x: 400, y: 400}, {x: 600, y: 200}, {x: 600, y: 600}, {x: 400, y: 400}],
+    color: '#a52a2a'
+  },
+  {
+    p: [{x: 600, y: 200}, {x: 800, y: 0}, {x: 800, y: 400}, {x: 600, y: 600}, {x: 600, y: 200}],
+    color: '#b8860b'
+  },
+  {
+    p: [{x: 400, y: 800}, {x: 800, y: 400}, {x: 800, y: 800}, {x: 400, y: 800}],
+    color: '#ff8c00'
+  }
+]
+
+for (let i = 0; i < tangram.length; i++) {
+  draw(tangram[i]);
+}
+
+function draw(polygon) {
+  context.beginPath();
+  context.moveTo(polygon.p[0].x, polygon.p[0].y);
+  for (let i = 1; i < polygon.p.length; i++) {
+    context.lineTo(polygon.p[i].x, polygon.p[i].y);
+  }
+  context.fillStyle = polygon.color;
+  context.fill();
+}
+
+</script>
+</body>
+</html>
