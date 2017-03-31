@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>pinball</title>
+  <style>
+    #canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+let width = 400;
+let height = 400;
+let position = {x: 50, y: 50};
+let radius = 10;
+let vx = Math.ceil(Math.random() * 8);
+let vy = Math.ceil(Math.random() * 8);
+
+console.log(vx, vy);
+
+let canvas = document.querySelector('#canvas');
+let context = canvas.getContext('2d');
+
+canvas.width = width;
+canvas.height = height;
+
+setInterval(() => {
+  renderBall(position);
+  updateBall(position);
+}, 20);
+
+function renderBall(position) {
+  context.clearRect(0, 0, width, height);
+  context.beginPath();
+  context.arc(position.x, position.y, radius, 0, Math.PI*2);
+  context.fillStyle = 'blue';
+  context.fill();
+  context.closePath();
+}
+
+function updateBall(position) {
+  position.x += vx;
+  position.y += vy;
+
+  if (position.x >= width - radius) {
+    position.x = width - radius;
+    vx = -vx;
+  } 
+
+  if (position.x <= radius) {
+    position.x = radius;
+    vx = -vx;
+  }
+
+  if (position.y >= height - radius) {
+    position.y = height - radius;
+    vy = -vy;
+  } 
+
+  if (position.y <= radius) {
+    position.y = radius;
+    vy = -vy;
+  }
+}
+</script>
+</body>
+</html>
