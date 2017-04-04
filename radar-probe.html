@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>radar probe</title>
+  <style>
+    #canvas {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+<div id="description">
+  模仿最强大脑第四季 2017-03-10 期黄政和郑才千的雷达探点项目做的一个小游戏，看过最强大脑的应该知道怎么玩这个吧，目前做的比较粗糙，之后在慢慢修改。
+</div>
+
+<canvas id="canvas"></canvas>
+
+<div>
+  <button id="startGame" type="button">开始</button>
+  <button id="stopGame" type="button" disabled>停止</button>
+</div>
+
+<script>
+
+
+
+let canvas = document.querySelector('#canvas');
+let context = canvas.getContext('2d');
+
+canvas.width = 1000;
+canvas.height = 500;
+
+// 保存背景圆的位置和半径
+let circle = {x: 250, y: 250, radius: 200};
+let circleRight = {x: 750, y: 250, radius: 200};
+let arrPoints = []; // 保存随机生成的散点
+
+drawCircle(circle);
+drawPoints(10);
+deleteOnePoint();
+
+// drawCircle(circleRight);
+// renderPointsAtRight();
+
+let imageDataTmp = context.getImageData(0, 0, canvas.width/2, canvas.height);
+let startGameButton = document.querySelector('#startGame');
+let stopGameButton = document.querySelector('#stopGame');
+let rightCircleImg; // 保存右侧去掉一点后的图像
+let saveInterval;
+
+startGameButton.onclick = function () {
+  drawCircle(circleRight);
+  renderPointsAtRight();
+  rightCircleImg = context.getImageData(500, 0, canvas.width, canvas.height);
+  startGame();
+  this.disabled = true;
+  stopGameButton.disabled = false;
+}
+
+stopGameButton.onclick = function () {
+  this.disabled = true;
+  clearInterval(saveInterval);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.putImageData(imageDataTmp, 0, 0);
+  context.putImageData(rightCircleImg, 500, 0);
+}
+
+// 从散点数组中随机删掉一点
+function deleteOnePoint() {
+  arrPoints.splice( Math.floor( Math.random()*arrPoints.length ), 1 );
+}
+
+// 渲染数组中的散点
+function renderPointsAtRight() {
+  context.globalCompositeOperation = 'source-over';
+  for (let i = 0; i < arrPoints.length; i++) {
+    context.beginPath();
+    context.arc(arrPoints[i].x+500, arrPoints[i].y, arrPoints[i].r, 0, 2*Math.PI);
+    context.fillStyle = '#fff';
+    context.fill();
+    context.closePath();
+  }
+}
+
+function startGame() {
+  let start = 30;
+  let end = 0;
+  saveInterval = setInterval(() => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.putImageData(imageDataTmp, 0, 0);
+    drawNegativeSector(circle.x, circle.y, circle.radius, start, end);
+    context.putImageData(rightCircleImg, 500, 0);
+    drawNegativeSector(circleRight.x, circleRight.y, circleRight.radius, start, end);
+    // copy();
+    start++;
+    end++;
+  }, 30);
+}
+
+// 将一块区域复制到另一块区域
+function copy() {
+  let imageData = context.getImageData(0, 0, canvas.width/2, canvas.height);
+  context.putImageData(imageData, canvas.width/2, 0);
+}
+
+// 画一个扇形覆盖在大圆上，只显示部分可视区域
+function drawNegativeSector(x, y, r, s, e) {
+  context.beginPath();
+  context.moveTo(x, y);
+  context.lineTo( x+r*Math.cos(s*Math.PI/180), y+r*Math.sin(s*Math.PI/180) );
+  context.arc(x, y, r, s*Math.PI/180, e*Math.PI/180);
+  context.closePath();
+
+  context.fillStyle = '#ccc';
+  context.fill();
+}
+
+// 画一个黑色背景的圆作为背景
+function drawCircle({x, y, radius}) {
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2*Math.PI);
+  context.fillStyle = '#000';
+  context.fill();
+  context.closePath();
+}
+
+// 求两点之间的距离
+function distanceBetween(x1, y1, x2, y2) {
+  let x = Math.abs(x1 - x2);
+  let y = Math.abs(y1 - y2);
+  return Math.sqrt(x*x + y*y);
+}
+
+// 在黑色背景上随机生成 num 个圆点，圆点要在背景圆内部，并且所有小圆点不能重叠
+function drawPoints(num) {
+
+  context.globalCompositeOperation = 'source-over';
+  
+  
+
+  while (arrPoints.length < num) {
+    // 随机生成一个点，该点要在大圆的外接正方形范围内
+    let obj = {
+      x: Math.round( Math.random() * 2*circle.radius + (circle.x-circle.radius) ),
+      y: Math.round( Math.random() * 2*circle.radius + (circle.y-circle.radius) ),
+      r: 4
+    };
+
+    // 只有符合生成的点在圆内才放入数组中
+    if (distanceBetween(obj.x, obj.y, circle.x, circle.y)+obj.r < circle.radius) {
+
+      arrPoints.push(obj);
+
+      // 从数组中删掉重叠的点
+      for (let i = 0; i < arrPoints.length; i++) {
+        for (let j = i + 1; j < arrPoints.length; j++) {
+          if (distanceBetween(arrPoints[i].x, arrPoints[i].y, arrPoints[j].x, arrPoints[j].y) <= obj.r*2) {
+            arrPoints.pop();
+          }
+        }
+      }
+
+    }
+    
+  }
+
+  for (let i = 0; i < num; i++) {
+    context.beginPath();
+    context.arc(arrPoints[i].x, arrPoints[i].y, arrPoints[i].r, 0, 2*Math.PI);
+    context.fillStyle = '#fff';
+    context.fill();
+    context.closePath();
+  }
+} 
+
+</script>
+</body>
+</html>
