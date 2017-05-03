@@ -39,8 +39,8 @@
   <h3>blog</h3>
   <my-websites v-bind:some-websites="blog"></my-websites>
 
-  <h3>租房</h3>
-  <my-websites v-bind:some-websites="renting"></my-websites>
+  <!--<h3>租房</h3>
+  <my-websites v-bind:some-websites="renting"></my-websites>-->
 
   <h3>other</h3>
   <my-websites v-bind:some-websites="other"></my-websites>
@@ -71,6 +71,7 @@ var vm = new Vue({
       {name: 'cdnjs', url: 'https://cdnjs.com/'}
     ],
     itTechnology: [
+      {name: 'tutorialspoint', url: 'https://www.tutorialspoint.com/'},
       {name: '菜鸟教程', url: 'http://www.runoob.com/'},
       {name: 'w3school', url: 'http://www.w3school.com.cn/'},
       {name: 'MDN Mozilla Developer Network', url: 'https://developer.mozilla.org/zh-CN/'},
@@ -87,12 +88,12 @@ var vm = new Vue({
       {name: '廖雪峰', url: 'http://www.liaoxuefeng.com/'},
       {name: '王垠', url: 'http://www.yinwang.org/'}
     ],
-    renting: [
-      {name: 'ZUBER', url: 'http://www.zuber.im/'},
-      {name: 'ZIROOM', url: 'http://www.ziroom.com/'},
-      {name: '蛋壳公寓', url: 'http://www.dankegongyu.com/'},
-      {name: '北京租房豆瓣小组', url: 'https://www.douban.com/group/beijingzufang/'}
-    ],
+    // renting: [
+    //   {name: 'ZUBER', url: 'http://www.zuber.im/'},
+    //   {name: 'ZIROOM', url: 'http://www.ziroom.com/'},
+    //   {name: '蛋壳公寓', url: 'http://www.dankegongyu.com/'},
+    //   {name: '北京租房豆瓣小组', url: 'https://www.douban.com/group/beijingzufang/'}
+    // ],
     other: [
       {name: '中国高等教育学生信息网', url: 'http://www.chsi.com.cn/'},
       {name: '沈阳市人力资源和社会保障局', url: 'http://www.syhrss.gov.cn/'},
