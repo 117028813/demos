@@ -30,6 +30,9 @@
 </head>
 <body>
 <div id="websites">
+  <h3>Search Engine</h3>
+  <my-websites v-bind:some-websites="searchEngine"></my-websites>
+  
   <h3>CDN</h3>
   <my-websites v-bind:some-websites="cdn"></my-websites>
 
@@ -65,6 +68,13 @@ Vue.component('my-websites', {
 var vm = new Vue({
   el: '#websites',
   data: {
+    searchEngine: [
+      {name: '百度', url: 'https://www.baidu.com/'},
+      {name: '360搜索', url: 'https://www.so.com/'},
+      {name: 'Google', url: 'https://www.google.com/'},
+      {name: '必应', url: 'http://cn.bing.com/'},
+      {name: '搜狗搜索', url: 'https://www.sogou.com/'}
+    ],
     cdn: [
       {name: 'BootCDN', url: 'http://www.bootcdn.cn/'},
       {name: '七牛云存储', url: 'http://www.staticfile.org/'},
